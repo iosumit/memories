@@ -28,6 +28,14 @@ const updateMemory = (input) => new Promise((resolve, reject) => {
         .catch(err => reject(err))
 })
 
+const deleteMemory = (id) => new Promise((resolve, reject) => {
+    Memory.deleteOne({
+        _id: id
+    })
+        .then((res) => resolve(res))
+        .catch(err => reject(err))
+})
+
 function getObjectByQuery(filters, next) {
     Memory.findOne(filters.query)
         .select(filters.selectFrom ? filters.selectFrom : {})
@@ -39,5 +47,6 @@ function getObjectByQuery(filters, next) {
 module.exports = {
     getMemories,
     addNewMemory,
-    updateMemory
+    updateMemory,
+    deleteMemory
 }

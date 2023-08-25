@@ -2,6 +2,7 @@
 const Joi = require('joi');
 const handler = require('../handlers/memories.handler');
 const { strings } = require('../utils/strings');
+const { default: mongoose } = require('mongoose');
 
 const getMemories = (req, res, next) => {
     handler.getMemories().then((result) => {
@@ -14,7 +15,7 @@ const getMemories = (req, res, next) => {
 
 const addNewMemories = (req, res, next) => {
     if (!req.body) {
-        res.status(500).json({ status: strings.error, message: strings.param_not_found });
+        return res.status(500).json({ status: strings.error, message: strings.param_not_found });
     }
 
     const schema = Joi.object({
@@ -44,7 +45,7 @@ const addNewMemories = (req, res, next) => {
 
 const updateMemory = (req, res, next) => {
     if (!req.body) {
-        res.status(500).json({ status: strings.error, message: strings.param_not_found });
+        return res.status(500).json({ status: strings.error, message: strings.param_not_found });
     }
 
     const schema = Joi.object({
@@ -75,7 +76,15 @@ const updateMemory = (req, res, next) => {
 }
 
 const deleteMemory = (req, res, next) => {
-    res.status(200).json({ status: 'Success', message: 'Memory Deleted' });
+    if (!req.params.id || !mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(500).json({ status: strings.error, message: strings.error_message });
+    }
+
+    handler.deleteMemory(req.params.id).then((result) => {
+        res.status(200).json({ status: strings.success, message: 'Successfully deleted' });
+    }).catch(err => {
+        res.status(500).json({ status: strings.error, message: strings.error_message });
+    })
 }
 
 module.exports = {
