@@ -2,7 +2,7 @@ const Express = require("express");
 const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-
+require('./init')
 const app = new Express();
 
 app.use(cors({

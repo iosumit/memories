@@ -1,7 +1,14 @@
 
+const handler = require('../handlers/memories.handler');
+const { strings } = require('../utils/strings');
 
 const getMemories = (req, res, next) => {
-    res.status(200).json({ status: 'Success', message: 'Memories Fetched' });
+    handler.getMemories().then((result) => {
+        res.status(200).json({ status: strings.success, message: 'Successfully memories fetched', data: result ?? [] });
+    }).catch(err => {
+        console.log(err)
+        res.status(500).json({ status: strings.error, message: strings.error_message });
+    })
 }
 
 const addNewMemory = (req, res, next) => {
