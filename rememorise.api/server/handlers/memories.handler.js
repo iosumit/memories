@@ -12,8 +12,18 @@ const getMemories = () => new Promise((resolve, reject) => {
 })
 
 const addNewMemory = (input) => new Promise((resolve, reject) => {
+    console.log(input);
     const memory = new Memory(input)
     memory.save()
+        .then((res) => resolve(res))
+        .catch(err => reject(err))
+})
+
+const updateMemory = (input) => new Promise((resolve, reject) => {
+    console.log(input);
+    Memory.findOneAndUpdate({
+        _id: input._id
+    }, input)
         .then((res) => resolve(res))
         .catch(err => reject(err))
 })
@@ -28,5 +38,6 @@ function getObjectByQuery(filters, next) {
 
 module.exports = {
     getMemories,
-    addNewMemory
+    addNewMemory,
+    updateMemory
 }
