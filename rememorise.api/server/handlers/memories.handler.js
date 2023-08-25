@@ -11,6 +11,13 @@ const getMemories = () => new Promise((resolve, reject) => {
     })
 })
 
+const addNewMemory = (input) => new Promise((resolve, reject) => {
+    const memory = new Memory(input)
+    memory.save()
+        .then((res) => resolve(res))
+        .catch(err => reject(err))
+})
+
 function getObjectByQuery(filters, next) {
     Memory.findOne(filters.query)
         .select(filters.selectFrom ? filters.selectFrom : {})
@@ -20,5 +27,6 @@ function getObjectByQuery(filters, next) {
 }
 
 module.exports = {
-    getMemories
+    getMemories,
+    addNewMemory
 }

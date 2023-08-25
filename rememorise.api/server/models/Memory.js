@@ -4,7 +4,7 @@ const memorySchema = mongoose.Schema({
     email: String,
     subject: String,
     description: String,
-    tags: String,
+    tags: [String],
     image: String,
     notify: {
         type: Boolean,
