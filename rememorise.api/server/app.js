@@ -13,8 +13,10 @@ app.use(bodyParser.json())
 app.use(morgan('dev'))
 
 
-app.use('/', (req, res, next) => {
-    res.status(200).json({ status: "Success", message: "Server is working" })
-})
+const mainRoutes = require("./routes/main.route");
+const memoriesRoutes = require("./routes/memories.routes");
+
+app.use('/', mainRoutes)
+app.use('/memories', memoriesRoutes)
 
 module.exports = app;
