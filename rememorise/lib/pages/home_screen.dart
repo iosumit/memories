@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("ReMemorise"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => GoRouter.of(context).push('/home/detail'),
         child: const Icon(
           Icons.add,
           size: 30,
@@ -79,7 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisCellCount: i.isEven ? 1.2 : 0.9,
                       child: NoteItem(
                         memory: memories[i],
-                        onTap: () => GoRouter.of(context).push('/home/detail'),
+                        onTap: () => GoRouter.of(context)
+                            .push('/home/detail', extra: memories[i]),
                       ),
                     ),
                   ).toList()),

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:rememorise/apis/memories_api.dart';
 import 'package:rememorise/blocs/memories_bloc.dart';
+import 'package:rememorise/models/memory.dart';
 import 'package:rememorise/pages/home_screen.dart';
 import 'package:rememorise/pages/note_detail.dart';
 import 'package:rememorise/pages/splash_screen.dart';
@@ -31,8 +32,9 @@ class MyApp extends StatelessWidget {
                 routes: [
                   GoRoute(
                     path: 'detail',
-                    builder: (context, state) => const NoteDetailScreen(
-                      key: Key('detail'),
+                    builder: (context, state) => NoteDetailScreen(
+                      key: const Key('detail'),
+                      memory: state.extra as Memory?,
                     ),
                   )
                 ]),

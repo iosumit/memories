@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+class Strings {
+  static String errorDefaultMessage = "Something went wrong!";
+}
+
 class Palates {
   static Color border = Colors.grey.withOpacity(0.4);
   static Color black = Colors.black;

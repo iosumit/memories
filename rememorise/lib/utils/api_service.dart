@@ -28,7 +28,6 @@ class ApiService {
     var client = http.Client();
 
     http.Response response;
-    print(url);
 
     try {
       if (method == POST) {
@@ -52,7 +51,7 @@ class ApiService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonDecode(response.body);
       } else {
-        throw response.body;
+        throw jsonDecode(response.body);
       }
     } catch (e) {
       rethrow;
