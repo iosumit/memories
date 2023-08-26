@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:rememorise/models/memory.dart';
+import 'package:rememorise/utils/extensions.dart';
 
 import '../utils/consts.dart';
 
 class NoteItem extends StatelessWidget {
-  const NoteItem({super.key, this.onTap});
+  const NoteItem({super.key, this.onTap, required this.memory});
   final Function()? onTap;
+  final Memory memory;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class NoteItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Title",
+              memory.subject!,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -28,7 +31,7 @@ class NoteItem extends StatelessWidget {
             const SizedBox(height: 10),
             Expanded(
               child: Text(
-                "Description " * 10,
+                memory.description!,
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
@@ -40,7 +43,7 @@ class NoteItem extends StatelessWidget {
             Align(
               alignment: Alignment.bottomRight,
               child: Text(
-                "23 Aug, 23",
+                memory.updatedAt!.toDate,
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,

@@ -19,17 +19,16 @@ class ApiService {
     "Keep-Alive": "timeout=5, max=1000"
   };
 
-  void removeTokens() => httpHeaders.remove('Authorization');
-
-  static Future<dynamic> callApi(
-      {String? method,
-      required String url,
-      Map<String, String>? header,
-      Map? body,
-      bool isAuthorised = true}) async {
+  static Future<dynamic> callApi({
+    String? method,
+    required String url,
+    Map<String, String>? header,
+    Map? body,
+  }) async {
     var client = http.Client();
 
     http.Response response;
+    print(url);
 
     try {
       if (method == POST) {
