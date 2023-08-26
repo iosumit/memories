@@ -3,7 +3,7 @@ const { strings } = require('../utils/strings')
 
 const getMemories = () => new Promise((resolve, reject) => {
     const query = {}
-    getObjectByQuery({ query }, (err, result) => {
+    getAllObjectByQuery({ query }, (err, result) => {
         if (err) {
             return reject(err)
         }
@@ -39,6 +39,14 @@ const deleteMemory = (id) => new Promise((resolve, reject) => {
 function getObjectByQuery(filters, next) {
     Memory.findOne(filters.query)
         .select(filters.selectFrom ? filters.selectFrom : {})
+        .lean()
+        .then((result) => next(null, result))
+        .catch((err) => next(err));
+}
+function getAllObjectByQuery(filters, next) {
+    Memory.find(filters.query ?? {})
+        .select(filters.selectFrom ?? {})
+        .sort(filters.sortBy ?? {})
         .lean()
         .then((result) => next(null, result))
         .catch((err) => next(err));
