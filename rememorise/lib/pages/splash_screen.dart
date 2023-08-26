@@ -21,7 +21,7 @@ class SplashScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const Text(
-              "ReMemorise",
+              "Memorise",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ],

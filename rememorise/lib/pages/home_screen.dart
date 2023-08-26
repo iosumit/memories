@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("ReMemorise"),
+        title: const Text("Memorise"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => GoRouter.of(context).push('/home/detail'),
