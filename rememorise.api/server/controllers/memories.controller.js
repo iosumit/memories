@@ -4,6 +4,7 @@ const handler = require('../handlers/memories.handler');
 const { strings } = require('../utils/strings');
 const { default: mongoose } = require('mongoose');
 
+
 const getMemories = (req, res, next) => {
     handler.getMemories().then((result) => {
         res.status(200).json({ status: strings.success, message: 'Successfully memories fetched', data: result ?? [] });
@@ -87,6 +88,41 @@ const deleteMemory = (req, res, next) => {
     })
 }
 
+const memoryHook = (req, res, next) => {
+    handler.getAndUpdateNotifyMemory().then((result) => {
+        console.log(result)
+        const newDate = new Date();
+        newDate.setDate(newDate.getDate() + 1)
+
+        const postHookBody = {
+            "path": "/webhooks/ph/getStarted",
+            "postAt": newDate,
+            "data": {
+                "email": "teencheetah.io+test@gmail.com"
+            }
+        };
+
+        handler.sendEmail(result.email, result.subject, result.description).then(mailRes => {
+            console.log(mailRes)
+        }).catch(err => {
+            console.log(err)
+        })
+
+        handler.createPosthook(postHookBody, 'GET').then((pres) => {
+            console.log(res)
+            res.status(200).json({ status: strings.success, message: 'Successfully posthook created sent', data: pres });
+        }).catch(err => {
+            console.log(err)
+            res.status(500).json({ status: strings.error, message: strings.error_message });
+        })
+
+    }).catch(err => {
+        console.log(err)
+        res.status(500).json({ status: strings.error, message: strings.error_message });
+    })
+}
+
 module.exports = {
-    getMemories, deleteMemory, addNewMemories, updateMemory
+    getMemories, deleteMemory, addNewMemories, updateMemory,
+    memoryHook
 }
